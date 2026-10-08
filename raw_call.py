@@ -1,5 +1,6 @@
 import os
 import requests
+from parse import get_text, is_complete, total_tokens
 
 apikey= os.environ["ANTHROPIC_API_KEY"]
 url = "https://api.anthropic.com/v1/messages"
@@ -14,22 +15,10 @@ b = {
 
 response = requests.post(url, headers=h, json=b)
 data = response.json()
-print(data)
 
 
-
-print(f"claude's answer text: {data['content'][0]['text']}")
-print(f"stop reason: {data['stop_reason']}")
-print(f"input tokens: {data['usage']['input_tokens']}")
-print(f"output tokens: {data['usage']['output_tokens']}")
-print(type(response.text))
-print(type(data))
+print(f"Answer: {get_text(data)}")
+print(f"Complete: {is_complete(data)}")
+print(f"Total tokens: {total_tokens(data)}")
 
 
-
-
-
-
-
-# print(f"status code: {response.status_code}")
-# print(f"text: {response.text}")
